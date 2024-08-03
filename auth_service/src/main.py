@@ -8,6 +8,7 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
 from src.db.base import init_database
+from src.routes.users import auth_router
 
 
 @asynccontextmanager
@@ -61,6 +62,7 @@ def create_app() -> FastAPI:
         FastAPI: Fastapi application
     """
     app = FastAPI(lifespan=lifespan_events)
+    app.include_router(auth_router)
     app.openapi_schema = get_openapi_schema(app)
     return app
 
