@@ -1,0 +1,18 @@
+[server]
+host = "0.0.0.0"
+port = 8000
+workers = 1
+
+[database]
+host = "localhost"
+port = 27017
+name = "db"
+
+[logger]
+log_to_console = true
+log_to_file = true
+log_to_logstash = false
+file_path = "/app/files/output.txt"
+log_level='INFO'
+logstash_host = "logstash.example.com"
+logstash_port = 5044
