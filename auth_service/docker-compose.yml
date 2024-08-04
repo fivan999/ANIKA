@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  fastapi_app:
+    build: .
+    container_name: fastapi_app
+    command: sh -c "poetry run alembic upgrade head && poetry run uvicorn src.main:app --reload --host=0.0.0.0 --port=8080"
+    env_file:
+      - .env
+    networks:
+      - internet
+      - webapp
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database
+    volumes:
+      - '.:/app'
+
+  database:
+    image: postgres:16-alpine3.19
+    container_name: postgres
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    restart: unless-stopped
+    networks:
+      - webapp
+
+networks:
+  webapp:
+    driver: bridge
+    name: webapp
+  internet:
+    driver: bridge
+    name: internet
+
+volumes:
+  postgres_data:
