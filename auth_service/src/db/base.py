@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 from src.config import settings
 
@@ -7,7 +7,7 @@ from src.config import settings
 Base = declarative_base()
 
 
-async def init_database() -> async_sessionmaker:
+async def init_database(database_url: str) -> async_sessionmaker:
     """
     Creating db sessions' factory
 
