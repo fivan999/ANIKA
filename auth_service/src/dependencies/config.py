@@ -1,13 +1,9 @@
+from functools import lru_cache
 from typing import Annotated
 
 from fastapi import Depends
 
-from src.config import (
-    DBConfig,
-    JWTConfig,
-    Settings,
-)
-from functools import lru_cache
+from src.config import DBConfig, JWTConfig, Settings
 
 
 @lru_cache

@@ -3,4 +3,3 @@ from tests.fixtures.db import (
     async_session,
     postgres_container,
 )
-from tests.fixtures.app import fastapi_test_client

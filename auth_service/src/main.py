@@ -7,8 +7,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
-from src.dependencies.config import get_db_config
 from src.db.base import init_database
+from src.dependencies.config import get_db_config
 from src.routes.users import auth_router
 
 

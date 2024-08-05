@@ -5,6 +5,8 @@ import pytest_asyncio
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from testcontainers.postgres import PostgresContainer
 
+from src.db.base import Base
+
 
 @pytest.fixture(scope='session')
 def postgres_container() -> Generator:
@@ -25,9 +27,9 @@ def postgres_container() -> Generator:
         postgres_container.stop()
 
 
-@pytest.fixture(scope='session')
-def async_db_sessionmaker(
-    postgres_container: PostgresContainer
+@pytest_asyncio.fixture(scope='session')
+async def async_db_sessionmaker(
+    postgres_container: PostgresContainer,
 ) -> async_sessionmaker:
     """
     fixture for getting async sessionmaker
@@ -42,6 +44,8 @@ def async_db_sessionmaker(
         url=postgres_container.get_connection_url(),
         echo=True,
     )
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     return async_sessionmaker(engine, expire_on_commit=False)
 
 
