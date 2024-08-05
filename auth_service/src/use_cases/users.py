@@ -34,8 +34,8 @@ class UserUseCase:
         user_get_status, user_result_data = (
             await self.repository.get_user_by_username(username)
         )
-        if user_get_status == UserEnum.USER_NOT_EXISTS:
-            return UserEnum.USER_NOT_EXISTS, None
+        if user_get_status != UserEnum.USER_EXISTS:
+            return user_get_status, None
         return UserEnum.USER_EXISTS, UserFullScheme(
             **user_result_data.__dict__
         )

@@ -7,7 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
-from src.config import settings
+from src.dependencies.config import get_db_config
 from src.db.base import init_database
 from src.routes.users import auth_router
 
@@ -21,8 +21,7 @@ async def lifespan_events(app: FastAPI):
         app (FastAPI): Fastapi application
     """
     app.state.async_sessionmaker = await init_database(
-        f'postgresql+asyncpg://{settings.DB_USER}:{settings.DB_PASS}'
-        f'@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}'
+        get_db_config().connection_url
     )
     yield
 

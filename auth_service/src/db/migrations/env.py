@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from src.config import settings
+from src.dependencies.config import get_settings
 from src.models.users import User
 
 # this is the Alembic Config object, which provides
@@ -12,6 +12,7 @@ from src.models.users import User
 config = context.config
 
 section = config.config_ini_section
+settings = get_settings()
 config.set_section_option(section, 'DB_NAME', settings.DB_NAME)
 config.set_section_option(section, 'DB_USER', settings.DB_USER)
 config.set_section_option(section, 'DB_PASS', settings.DB_PASS)

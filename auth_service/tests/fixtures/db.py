@@ -1,35 +1,33 @@
-import os
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Generator
 
 import pytest
+import pytest_asyncio
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from testcontainers.postgres import PostgresContainer
 
 
 @pytest.fixture(scope='session')
-def postgres_container() -> PostgresContainer:
+def postgres_container() -> Generator:
     """
-    fixture for getting a postgres container for testing
+    getting a postgres db container
 
-    Returns:
-        PostgresContainer
+    Yields:
+        Generator: postgres container obj
     """
     postgres_container = PostgresContainer(
         image='postgres:16-alpine3.19',
-        username='postgres',
-        password='postgres',
-        port=5433,
-        dbname='postgres',
-        driver='postgresql+asyncpg',
+        driver='asyncpg',
     )
-    if os.name == 'nt':
-        postgres_container.get_container_host_ip = lambda: 'localhost'
-    return postgres_container
+    try:
+        postgres_container.start()
+        yield postgres_container
+    finally:
+        postgres_container.stop()
 
 
 @pytest.fixture(scope='session')
-async def async_db_sessionmaker(
-    postgres_container: PostgresContainer,
+def async_db_sessionmaker(
+    postgres_container: PostgresContainer
 ) -> async_sessionmaker:
     """
     fixture for getting async sessionmaker
@@ -41,14 +39,13 @@ async def async_db_sessionmaker(
         async_sessionmaker
     """
     engine = create_async_engine(
-        url='postgresql+asyncpg://postgres:postgres'
-        '@localhost:5433/postgres',
+        url=postgres_container.get_connection_url(),
         echo=True,
     )
     return async_sessionmaker(engine, expire_on_commit=False)
 
 
-@pytest.fixture(scope='function')
+@pytest_asyncio.fixture(scope='function')
 async def async_session(
     async_db_sessionmaker: async_sessionmaker,
 ) -> AsyncGenerator:
@@ -65,4 +62,4 @@ async def async_session(
         try:
             yield session
         finally:
-            session.close()
+            await session.close()

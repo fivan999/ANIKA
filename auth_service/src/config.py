@@ -1,4 +1,9 @@
+from dataclasses import dataclass
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from fastapi import Depends
+from typing import Annotated
+from functools import lru_cache
 
 
 class Settings(BaseSettings):
@@ -18,4 +23,21 @@ class Settings(BaseSettings):
     )
 
 
-settings = Settings()
+@dataclass
+class DBConfig:
+    connection_url: str
+
+
+@dataclass
+class JWTConfig:
+    jwt_secret_key: str
+    access_token_expire_minutes: int
+    refresh_token_expire_minutes: int
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
+
+
+SettingsDep = Annotated[Settings, Depends(get_settings)]

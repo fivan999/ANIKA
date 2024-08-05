@@ -17,7 +17,7 @@ class UserRepository:
 
     async def get_user_by_username(
         self, username: str
-    ) -> tuple[UserFullScheme | None, UserEnum]:
+    ) -> tuple[UserEnum, UserFullScheme | None]:
         """
         get user by his username
 
@@ -26,12 +26,12 @@ class UserRepository:
 
         Returns:
             tuple[
-                UserFullScheme | None, UserEnum
+                UserEnum, UserFullScheme | None
             ]: User data and enum status of getting user
         """
         user_query = select(User).where(User.username == username)
         user_result = await self.session.execute(user_query)
         user_obj = user_result.scalar()
         if user_obj is None:
-            return None, UserEnum.USER_NOT_EXISTS
-        return UserFullScheme(user_obj.__dict__), UserEnum.USER_EXISTS
+            return UserEnum.USER_NOT_EXISTS, None
+        return UserEnum.USER_EXISTS, UserFullScheme(user_obj.__dict__)

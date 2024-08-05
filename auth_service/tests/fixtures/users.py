@@ -1,4 +1,4 @@
-import pytest
+import pytest_asyncio
 from sqlalchemy import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -6,7 +6,7 @@ from src.models.users import User
 from src.utils.password import get_hashed_password
 
 
-@pytest.fixture(scope='function')
+@pytest_asyncio.fixture(scope='function')
 async def user1(async_session: AsyncSession) -> User:
     """
     fixture to create test user1
@@ -32,5 +32,4 @@ async def user1(async_session: AsyncSession) -> User:
     user_obj = await async_session.execute(user_create_query)
     user_obj = user_obj.scalar()
     await async_session.commit()
-    await async_session.close()
     return user_obj
