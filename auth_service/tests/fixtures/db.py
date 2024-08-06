@@ -3,20 +3,23 @@ from typing import Generator
 import pytest
 import pytest_asyncio
 from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 from testcontainers.postgres import PostgresContainer
 
-from src.db.base import Base
+from tests.utils.db import clear_db_tables, recreate_db_tables
 
 
 @pytest.fixture(scope='session')
-def postgres_container() -> Generator:
+def postgres_container() -> Generator[PostgresContainer, None, None]:
     """
-    getting a postgres db container
+    creates test postgres container and yields it
 
     Yields:
-        Generator: postgres container obj
+        Generator[
+            PostgresContainer, None, None
+        ]: generator with postgres container
     """
     postgres_container = PostgresContainer(
         image='postgres:16-alpine3.19',
@@ -30,17 +33,17 @@ def postgres_container() -> Generator:
 
 
 @pytest.fixture(scope='session')
-def db_sessionmaker(
+def db_engine(
     postgres_container: PostgresContainer,
-) -> async_sessionmaker:
+) -> Engine:
     """
-    fixture for getting async sessionmaker
+    creates sync db engine and recreates database
 
     Args:
-        postgres_container (PostgresContainer)
+        postgres_container (PostgresContainer): test postgres container
 
     Returns:
-        async_sessionmaker
+        Engine: engine objects
     """
     engine = create_engine(
         url=postgres_container.get_connection_url().replace(
@@ -48,10 +51,27 @@ def db_sessionmaker(
         ),
         echo=True,
     )
-    Base.metadata.create_all(engine)
-    return sessionmaker(
-        bind=engine, autoflush=False, autocommit=False, expire_on_commit=False
+    recreate_db_tables(engine)
+    return engine
+
+
+@pytest.fixture(scope='session')
+def db_sessionmaker(
+    db_engine: Engine,
+) -> sessionmaker:
+    """
+    fixture for getting sync sessionmaker
+
+    Args:
+        db_engine (Engine)
+
+    Returns:
+        async_sessionmaker
+    """
+    db_sessionmaker = sessionmaker(
+        db_engine, autoflush=False, autocommit=False, expire_on_commit=False
     )
+    return db_sessionmaker
 
 
 @pytest_asyncio.fixture(scope='session')
@@ -77,18 +97,21 @@ async def async_db_sessionmaker(
 
 
 @pytest.fixture(scope='function')
-def db_session(db_sessionmaker: sessionmaker) -> Generator:
+def db_session(
+    db_sessionmaker: sessionmaker,
+) -> Generator[Session, None, None]:
     """
-    fixture for getting async session
+    fixture that creates a session and clears a database
 
     Args:
-        async_db_sessionmaker (async_sessionmaker): async session maker
+        db_sessionmaker (sessionmaker)
 
-    Returns:
-        AsyncGenerator
+    Yields:
+        Generator[Session, None, None]: generator that yields session obj
     """
-    db_session = db_sessionmaker()
+    session = db_sessionmaker()
     try:
-        yield db_session
+        yield session
     finally:
-        db_session.close()
+        session.close()
+        clear_db_tables(db_sessionmaker)

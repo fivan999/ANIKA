@@ -10,9 +10,7 @@ from src.dependencies.config import jwt_config
 from src.utils.enums import TokenEnum
 
 
-def create_access_or_refresh_token(
-    sub: str, token_type: str
-) -> str:
+def create_access_or_refresh_token(sub: str, token_type: str) -> str:
     """
     Creating a jwt token with
 

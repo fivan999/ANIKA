@@ -26,6 +26,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_INITDB_ARGS="--locale-provider=icu --icu-locale=de-DE"
     volumes:
       - 'postgres_data:/var/lib/postgresql/data'
     restart: unless-stopped
