@@ -61,8 +61,10 @@ async def test_get_authorization_data_by_access_token(
     )
     response_json = response.json()
     assert response.status_code == 200
-    assert response_json.get('user_id', 0) == 1
-    assert response_json.get('partner_id', 0) == 1
+    assert response_json.get('user_id') == 1
+    assert response_json.get('partner_id') == 1
+    assert response.headers.get('X-User-Id') == '1'
+    assert response.headers.get('X-Partner-Id') == '1'
 
 
 @pytest.mark.asyncio

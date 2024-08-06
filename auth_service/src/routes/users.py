@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, HTTPException, status
+from fastapi import APIRouter, Body, HTTPException, status, Response
 
 from src.dependencies.users import CurrentUserDep, UserUseCaseDep
 from src.schemes.errors import ErrorScheme
@@ -71,8 +71,10 @@ async def get_new_access_token(
     },
 )
 async def get_user_id_and_partner_id(
-    current_user: CurrentUserDep,
+    current_user: CurrentUserDep, response: Response
 ) -> UserAuthorizationScheme:
+    response.headers['X-User-Id'] = str(current_user.id)
+    response.headers['X-Partner-Id'] = str(current_user.partner_id)
     return UserAuthorizationScheme(
         user_id=current_user.id, partner_id=current_user.partner_id
     )
