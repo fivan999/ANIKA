@@ -2,7 +2,7 @@ from typing import Dict
 from fastapi import APIRouter
 
 # Создание роутера с префиксом '/base'
-router = APIRouter(prefix='/base')
+router = APIRouter(prefix='/base', tags=['Основное'])
 
 
 @router.get('/ping')

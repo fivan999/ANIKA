@@ -4,7 +4,6 @@ from fastapi import FastAPI
 
 from config import config
 from handlers import router
-from handlers.general import lifespan
 
 
 def create_app() -> FastAPI:
@@ -13,7 +12,7 @@ def create_app() -> FastAPI:
     Returns:
         FastAPI: Настроенный экземпляр FastAPI.
     """
-    app = FastAPI(lifespan=lifespan)
+    app = FastAPI()
     app.include_router(router=router)
 
     return app
