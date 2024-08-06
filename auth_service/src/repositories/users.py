@@ -34,4 +34,4 @@ class UserRepository:
         user_obj = user_result.scalar()
         if user_obj is None:
             return UserEnum.USER_NOT_EXISTS, None
-        return UserEnum.USER_EXISTS, UserFullScheme(user_obj.__dict__)
+        return UserEnum.USER_EXISTS, UserFullScheme(**user_obj.__dict__)

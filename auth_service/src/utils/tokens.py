@@ -6,12 +6,12 @@ from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt import ExpiredSignatureError, PyJWTError
 
-from src.dependencies.config import JWTConfigDep
+from src.dependencies.config import jwt_config
 from src.utils.enums import TokenEnum
 
 
 def create_access_or_refresh_token(
-    sub: str, token_type: str, jwt_settings: JWTConfigDep
+    sub: str, token_type: str
 ) -> str:
     """
     Creating a jwt token with
@@ -19,7 +19,6 @@ def create_access_or_refresh_token(
     Args:
         sub (str): useful data
         token_type (str): type of a token (access or refresh)
-        jwt_settings (JWTConfigDep): jwt config
 
     Returns:
         str: jwt token
@@ -29,30 +28,29 @@ def create_access_or_refresh_token(
     data_to_encode['iat'] = creation_time
     if token_type == 'access_token':
         data_to_encode['exp'] = creation_time + datetime.timedelta(
-            minutes=jwt_settings.access_token_expire_minutes
+            minutes=jwt_config.access_token_expire_minutes
         )
     elif token_type == 'refresh_token':
         data_to_encode['exp'] = creation_time + datetime.timedelta(
-            minutes=jwt_settings.refresh_token_expire_minutes
+            minutes=jwt_config.refresh_token_expire_minutes
         )
     return jwt.encode(
-        data_to_encode, jwt_settings.jwt_secret_key, algorithm='HS256'
+        data_to_encode, jwt_config.jwt_secret_key, algorithm='HS256'
     )
 
 
-def decode_jwt_token(token: str, jwt_settings: JWTConfigDep) -> dict:
+def decode_jwt_token(token: str) -> dict:
     """
     Getting payload of a jwt token
 
     Args:
         token (str): jwt token
-        jwt_settings (JWTConfigDep): jwt config
 
     Returns:
         dict: payload
     """
     payload = jwt.decode(
-        token, jwt_settings.jwt_secret_key, algorithms=['HS256']
+        token, jwt_config.jwt_secret_key, algorithms=['HS256']
     )
     return payload
 

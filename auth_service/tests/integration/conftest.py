@@ -1,5 +1,2 @@
-from tests.fixtures.db import (
-    async_db_sessionmaker,
-    async_session,
-    postgres_container,
-)
+from tests.fixtures.app import fastapi_test_client
+from tests.fixtures.db import db_session, db_sessionmaker, postgres_container, async_db_sessionmaker
