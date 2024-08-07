@@ -31,6 +31,7 @@ async def get_my_permissions(
 async def get_permissions_by_topic_id(
     topic_id: int,
     db: AsyncSession = Depends(get_db),
+    current_partner_id: int = Depends(get_current_partner_id),  # noqa: ARG001
 ) -> list[Permission]:
     """
     Возвращает список всех разрешений топика

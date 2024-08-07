@@ -1,12 +1,29 @@
-from fastapi import Header, HTTPException
+from typing import Annotated
 
-# partner_id: int = Header(None)
-async def get_current_partner_id() -> int:
-    # if partner_id is None:
-    #     raise HTTPException(
-    #         status_code=401,
-    #         detail='Partner ID must be provided',
-    #     )
+from fastapi import Depends, Header, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-    # return int(partner_id)
-    return 2
+
+def get_jwt_bearer_token(
+    credentials: Annotated[
+        HTTPAuthorizationCredentials,
+        Depends(HTTPBearer()),
+    ],
+) -> str:
+    return credentials.credentials
+
+
+JWTTokenDep = Annotated[str, Depends(get_jwt_bearer_token)]
+
+
+async def get_current_partner_id(
+    token: JWTTokenDep,  # noqa: ARG001
+    partner_id: int = Header(None),
+) -> int:
+    if partner_id is None:
+        raise HTTPException(
+            status_code=401,
+            detail='Partner ID must be provided',
+        )
+
+    return int(partner_id)

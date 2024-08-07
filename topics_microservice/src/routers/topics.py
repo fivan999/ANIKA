@@ -28,8 +28,8 @@ async def get_topics(
         limit=limit,
         skip=skip,
     )
-    
-    
+
+
 @topic_router.get('/my')
 async def get_my_topics(
     limit: int = 100,
@@ -46,7 +46,6 @@ async def get_my_topics(
         limit=limit,
         skip=skip,
     )
-
 
 
 @topic_router.get(
