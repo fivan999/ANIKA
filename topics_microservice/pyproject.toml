@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "ANIKA"
+version = "1.0.0"
+description = ""
+authors = ["bebra_dev", "Data-Name-ID"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.1"
+sqlalchemy = "^2.0.31"
+psycopg2-binary = "^2.9.9"
+alembic = "^1.13.2"
+pydantic-settings = "^2.3.4"
+asyncpg = "^0.29.0"
+pyjwt = "^2.8.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pytest = "^8.3.2"
+pytest-asyncio = "^0.23.8"
+httpx = "^0.27.0"
+aiosqlite = "^0.20.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select = ["ALL"]
+# игнорирование документации, типизации
+ignore = ["D", "ANN", "FA", "B008", "RUF002"]
+
+[tool.ruff.lint.per-file-ignores]
+"*/some-folder/*.py" = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
