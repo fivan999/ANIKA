@@ -36,9 +36,7 @@ class UserUseCase:
         )
         if user_get_status != UserEnum.USER_EXISTS:
             return user_get_status, None
-        return UserEnum.USER_EXISTS, UserFullScheme(
-            **user_result_data.__dict__
-        )
+        return UserEnum.USER_EXISTS, user_result_data
 
     async def get_user_by_token(
         self, token: str, token_type: str
@@ -63,7 +61,7 @@ class UserUseCase:
         )
         if result_status == UserEnum.USER_NOT_EXISTS:
             return UserEnum.USER_NOT_EXISTS, None
-        return UserEnum.USER_EXISTS, UserFullScheme(**result_user.__dict__)
+        return UserEnum.USER_EXISTS, result_user
 
     async def get_access_and_refresh_token(
         self, user_data: UserLoginScheme
