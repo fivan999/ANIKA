@@ -28,6 +28,25 @@ async def get_topics(
         limit=limit,
         skip=skip,
     )
+    
+    
+@topic_router.get('/my')
+async def get_my_topics(
+    limit: int = 100,
+    skip: int = 0,
+    db: AsyncSession = Depends(get_db),
+    current_partner_id: int = Depends(get_current_partner_id),
+) -> list[schemas.Topic]:
+    """
+    Возвращает список всех топиков, к которым у партнера есть доступ
+    """
+    return await crud_topics.get_my_topics(
+        db=db,
+        current_partner_id=current_partner_id,
+        limit=limit,
+        skip=skip,
+    )
+
 
 
 @topic_router.get(

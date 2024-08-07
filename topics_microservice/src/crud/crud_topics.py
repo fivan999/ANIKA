@@ -69,6 +69,22 @@ async def get_topics(
     return result.scalars().all()
 
 
+async def get_my_topics(
+    db: sqlalchemy.ext.asyncio.AsyncSession,
+    current_partner_id: int,
+    skip: int = 0,
+    limit: int = 100,
+):
+    stmt = (
+        sqlalchemy.future.select(src.models.Topic)
+        .filter(src.models.Topic.partner_id == current_partner_id)
+        .offset(skip)
+        .limit(limit)
+    )
+    result = await db.execute(stmt)
+    return result.scalars().all()
+
+
 async def create_topic(
     topic: src.schemas.TopicCreate,
     db: sqlalchemy.ext.asyncio.AsyncSession,
