@@ -59,6 +59,7 @@ class Topic(Base, BaseEntity):
         back_populates='topic',
         lazy='selectin',
     )
+    json_template: Mapped[str] = mapped_column()
 
 
 class Permission(Base):

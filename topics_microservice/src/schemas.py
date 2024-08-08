@@ -55,11 +55,13 @@ class TopicCreate(TopicBase):
 class TopicUpdate(TopicBase):
     name: str | None = None
     description: str | None = None
+    json_template: str
 
 
 class Topic(TopicBase):
     id: int
     partner: Partner
+    json_template: str
     subscriptions: list[Subscription] = []
     permissions: list[Permission] = []
 
