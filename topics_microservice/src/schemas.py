@@ -1,6 +1,13 @@
 from pydantic import BaseModel
 
 
+class Partner(BaseModel):
+    name: str
+
+    class Config:
+        from_attributes = True
+
+
 class SubscriptionBase(BaseModel):
     topic_id: int
     url: str
@@ -52,7 +59,7 @@ class TopicUpdate(TopicBase):
 
 class Topic(TopicBase):
     id: int
-    partner_id: int
+    partner: Partner
     subscriptions: list[Subscription] = []
     permissions: list[Permission] = []
 
