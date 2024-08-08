@@ -90,22 +90,10 @@ async def get_topic_subscriptions(
     db: sqlalchemy.ext.asyncio.AsyncSession,
     current_partner_id: int,
 ) -> list[src.models.Subscription]:
-    if topic_id <= 0:
-        logger.error('Invalid topic_id: %s', topic_id)
-        raise fastapi.HTTPException(status_code=400, detail='Invalid topic ID')
-
     stmt = (
         sqlalchemy.future.select(src.models.Subscription)
-        .join(
-            src.models.Permission,
-            src.models.Permission.topic_id == src.models.Subscription.topic_id,
-        )
-        .where(src.models.Subscription.topic_id == topic_id)
-        .where(src.models.Permission.partner_id == current_partner_id)
-        .options(
-            sqlalchemy.orm.selectinload(src.models.Subscription.topic),
-            sqlalchemy.orm.selectinload(src.models.Subscription.partner),
-        )
+        .filter(src.models.Subscription.topic_id == topic_id)
+        .filter(src.models.Subscription.partner_id == current_partner_id)
     )
 
     result = await db.execute(stmt)
