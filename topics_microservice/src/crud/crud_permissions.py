@@ -3,6 +3,7 @@ import sqlalchemy.ext.asyncio
 import sqlalchemy.future
 
 import src.config
+import src.crud.crud_partner
 import src.crud.crud_topics
 import src.main
 import src.models
@@ -52,7 +53,8 @@ async def get_permission_by_id(
     if not permission:
         logger.error('Permission with id %s not found', permission_id)
         raise fastapi.HTTPException(
-            status_code=404, detail='Permission not found',
+            status_code=404,
+            detail='Permission not found',
         )
 
     return permission
@@ -90,8 +92,11 @@ async def create_permission(
     db: sqlalchemy.ext.asyncio.AsyncSession,
     current_partner_id: int,
 ) -> src.models.Permission:
+    await src.crud.crud_partner.check_partner_is_exists(
+        permission.partner_id, db,
+    )
     await check_permission(permission.topic_id, db, current_partner_id)
-    db_permission = src.models.Permission(**permission.dict())
+    db_permission = src.models.Permission(**permission.model_dump())
     db.add(db_permission)
     await db.commit()
     await db.refresh(db_permission)
