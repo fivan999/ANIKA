@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, HTTPException, status, Response
+from fastapi import APIRouter, Body, HTTPException, Response, status
 
 from src.dependencies.users import CurrentUserDep, UserUseCaseDep
 from src.schemes.errors import ErrorScheme
