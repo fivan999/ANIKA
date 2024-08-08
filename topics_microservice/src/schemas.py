@@ -45,6 +45,7 @@ class Permission(PermissionBase):
 
 class TopicBase(BaseModel):
     name: str
+    json_template: str
     description: str | None = None
 
 
@@ -55,7 +56,6 @@ class TopicCreate(TopicBase):
 class TopicUpdate(TopicBase):
     name: str | None = None
     description: str | None = None
-    json_template: str
 
 
 class Topic(TopicBase):
