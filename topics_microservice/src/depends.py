@@ -18,12 +18,12 @@ JWTTokenDep = Annotated[str, Depends(get_jwt_bearer_token)]
 
 async def get_current_partner_id(
     token: JWTTokenDep,  # noqa: ARG001
-    partner_id: int = Header(None),
+    x_partner_id: int = Header(None),
 ) -> int:
-    if partner_id is None:
+    if x_partner_id is None:
         raise HTTPException(
             status_code=401,
             detail='Partner ID must be provided',
         )
 
-    return int(partner_id)
+    return int(x_partner_id)
