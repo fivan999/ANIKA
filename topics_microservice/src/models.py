@@ -31,11 +31,13 @@ class Partner(Base, BaseEntity):
         'Permission',
         back_populates='partner',
         lazy='selectin',
+        cascade='all, delete-orphan',
     )
     subscriptions: Mapped[List['Subscription']] = relationship(
         'Subscription',
         back_populates='partner',
         lazy='selectin',
+        cascade='all, delete-orphan',
     )
 
 
@@ -53,11 +55,13 @@ class Topic(Base, BaseEntity):
         'Permission',
         back_populates='topic',
         lazy='selectin',
+        cascade='all, delete-orphan',
     )
     subscriptions: Mapped[List['Subscription']] = relationship(
         'Subscription',
         back_populates='topic',
         lazy='selectin',
+        cascade='all, delete-orphan',
     )
     json_template: Mapped[str] = mapped_column(default='{}')
 
