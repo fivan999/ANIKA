@@ -17,7 +17,17 @@ async def get_my_permissions(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> list[Permission]:
     """
-    Возвращает список всех разрешений, которые есть у текущего партнера
+    Получить список прав доступа для текущего пользователя.
+
+    Параметры:
+    - **limit**: Максимальное количество возвращаемых прав доступа (по умолчанию 100).
+    - **skip**: Количество прав доступа, которое нужно пропустить (для пагинации, по умолчанию 0).
+
+    Возвращает:
+    - Список объектов прав доступа, связанных с текущим пользователем.
+
+    Пример использования:
+    - GET `/permissions/my` — получить первые 100 прав доступа пользователя.
     """
     return await crud_permissions.get_permissions(
         limit=limit,
@@ -34,7 +44,16 @@ async def get_permissions_by_topic_id(
     current_partner_id: int = Depends(get_current_partner_id),  # noqa: ARG001
 ) -> list[Permission]:
     """
-    Возвращает список всех разрешений топика
+    Получить список прав доступа для определённой темы.
+
+    Параметры:
+    - **topic_id**: Идентификатор темы, для которой необходимо получить права доступа.
+
+    Возвращает:
+    - Список объектов прав доступа, связанных с указанной темой.
+
+    Пример использования:
+    - GET `/permissions/topic/123` — получить все права доступа для темы с идентификатором 123.
     """
     return await crud_permissions.get_permissions_by_topic_id(
         topic_id=topic_id,
@@ -62,7 +81,20 @@ async def check_permission(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> str:
     """
-    Проверяет, есть ли у текущего партнера разрешение на доступ к этому топику
+    Проверить, имеет ли текущий пользователь право доступа к указанной теме.
+
+    Параметры:
+    - **topic_id**: Идентификатор темы, доступ к которой проверяется.
+
+    Возвращает:
+    - Сообщение о наличии или отсутствии прав доступа.
+
+    Ошибки:
+    - **403**: Если пользователь не имеет права доступа к теме.
+    - **404**: Если тема не найдена.
+
+    Пример использования:
+    - GET `/permissions/check/123` — проверить права доступа к теме с идентификатором 123.
     """
     await crud_permissions.check_permission(
         topic_id=topic_id,
@@ -79,7 +111,22 @@ async def create_permission(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> Permission:
     """
-    Создает новое разрешение
+    Создать новое право доступа для указанной темы и партнёра.
+
+    Параметры:
+    - **permission**: Данные для создания права доступа. Включает идентификатор партнёра и идентификатор темы.
+
+    Возвращает:
+    - Объект созданного права доступа.
+
+    Пример использования:
+    - POST `/permissions/create` с телом запроса:
+      ```json
+      {
+        "partner_id": 456,
+        "topic_id": 123
+      }
+      ```
     """
     return await crud_permissions.create_permission(
         permission=permission,
@@ -95,7 +142,16 @@ async def delete_permission_by_id(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> Permission:
     """
-    Удаляет разрешение по его идентификатору
+    Удалить право доступа по его идентификатору.
+
+    Параметры:
+    - **permission_id**: Идентификатор права доступа, которое нужно удалить.
+
+    Возвращает:
+    - Объект удалённого права доступа.
+
+    Пример использования:
+    - DELETE `/permissions/123` — удалить право доступа с идентификатором 123.
     """
     return await crud_permissions.delete_permission_by_id(
         permission_id=permission_id,
@@ -112,8 +168,17 @@ async def delete_permission_by_ids(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> Permission:
     """
-    Удаляет разрешение, которое даёт доступ к
-    топику партнёру по его идентификатору
+    Удалить право доступа по идентификаторам партнёра и темы.
+
+    Параметры:
+    - **other_partner_id**: Идентификатор партнёра, для которого необходимо удалить право доступа.
+    - **my_topic_id**: Идентификатор темы, для которой необходимо удалить право доступа.
+
+    Возвращает:
+    - Объект удалённого права доступа.
+
+    Пример использования:
+    - DELETE `/permissions/456/123` — удалить право доступа для партнёра 456 на тему 123.
     """
     return await crud_permissions.delete_permission_by_ids(
         partner_id=other_partner_id,

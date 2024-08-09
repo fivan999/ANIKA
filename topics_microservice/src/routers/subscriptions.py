@@ -19,7 +19,21 @@ async def create_subscription(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> schemas.Subscription:
     """
-    Создает новую подписку
+    Создать новую подписку на тему.
+
+    Параметры:
+    - **subscription**: Данные для создания подписки. Включает идентификатор темы, на которую оформляется подписка.
+
+    Возвращает:
+    - Объект созданной подписки.
+
+    Пример использования:
+    - POST `/subscriptions/create` с телом запроса:
+      ```json
+      {
+        "topic_id": 123
+      }
+      ```
     """
     return await crud_subscriptions.create_subscription(
         subscription=subscription,
@@ -35,7 +49,19 @@ async def get_subscription(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> schemas.Subscription:
     """
-    Возвращает подписку по ID
+    Получить информацию о подписке по её идентификатору.
+
+    Параметры:
+    - **subscription_id**: Идентификатор подписки, которую необходимо получить.
+
+    Возвращает:
+    - Объект подписки.
+
+    Ошибки:
+    - **404**: Подписка с указанным идентификатором не найдена.
+
+    Пример использования:
+    - GET `/subscriptions/123` — получить подписку с идентификатором 123.
     """
     subscription = await crud_subscriptions.get_subscription(
         subscription_id=subscription_id,
@@ -56,7 +82,16 @@ async def get_topic_subscriptions(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> list[schemas.Subscription]:
     """
-    Возвращает список подписок на топик
+    Получить список подписок на указанную тему для текущего пользователя.
+
+    Параметры:
+    - **topic_id**: Идентификатор темы, на которую оформлены подписки.
+
+    Возвращает:
+    - Список объектов подписок для данной темы.
+
+    Пример использования:
+    - GET `/subscriptions/topic/456` — получить все подписки на тему с идентификатором 456.
     """
     return await crud_subscriptions.get_topic_subscriptions(
         topic_id=topic_id,
@@ -72,7 +107,19 @@ async def delete_subscription(
     current_partner_id: int = Depends(get_current_partner_id),
 ) -> schemas.Subscription:
     """
-    Удаляет подписку
+    Удалить подписку по её идентификатору.
+
+    Параметры:
+    - **subscription_id**: Идентификатор подписки, которую нужно удалить.
+
+    Возвращает:
+    - Объект удаленной подписки.
+
+    Ошибки:
+    - **404**: Подписка с указанным идентификатором не найдена.
+
+    Пример использования:
+    - DELETE `/subscriptions/delete/123` — удалить подписку с идентификатором 123.
     """
     deleted_subscription = await crud_subscriptions.delete_subscription_by_id(
         subscription_id=subscription_id,
