@@ -3,7 +3,7 @@ import sqlalchemy.ext.asyncio
 import sqlalchemy.future
 
 import src.config
-import src.crud.crud_partner
+import src.crud.crud_partners
 import src.crud.crud_topics
 import src.main
 import src.models
@@ -92,7 +92,7 @@ async def create_permission(
     db: sqlalchemy.ext.asyncio.AsyncSession,
     current_partner_id: int,
 ) -> src.models.Permission:
-    await src.crud.crud_partner.check_partner_is_exists(
+    await src.crud.crud_partners.check_partner_is_exists(
         permission.partner_id, db,
     )
     await check_permission(permission.topic_id, db, current_partner_id)

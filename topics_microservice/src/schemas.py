@@ -1,16 +1,11 @@
-from pydantic import BaseModel
+from typing import Any
 
-
-class Partner(BaseModel):
-    name: str
-
-    class Config:
-        from_attributes = True
+from pydantic import BaseModel, HttpUrl, Json
 
 
 class SubscriptionBase(BaseModel):
     topic_id: int
-    url: str
+    url: HttpUrl
 
 
 class SubscriptionCreate(SubscriptionBase):
@@ -45,8 +40,8 @@ class Permission(PermissionBase):
 
 class TopicBase(BaseModel):
     name: str
-    json_template: str
     description: str | None = None
+    json_template: Json[Any]
 
 
 class TopicCreate(TopicBase):
@@ -58,10 +53,25 @@ class TopicUpdate(TopicBase):
     description: str | None = None
 
 
+class PartnerBase(BaseModel):
+    name: str
+    description: str | None = None
+
+
+class PartnerCreate(PartnerBase):
+    pass
+
+
+class Partner(PartnerBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+
 class Topic(TopicBase):
     id: int
-    partner: Partner
-    json_template: str
+    partner: PartnerBase
     subscriptions: list[Subscription] = []
     permissions: list[Permission] = []
 
