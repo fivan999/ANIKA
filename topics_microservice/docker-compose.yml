@@ -4,7 +4,7 @@ services:
   fastapi_app:
     build: .
     container_name: fastapi_app
-    command: sh -c "poetry run alembic revision --autogenerate && poetry run alembic upgrade head && poetry run uvicorn src.main:app --reload --port=8080 --host=0.0.0.0"
+    command: sh -c "poetry run alembic upgrade head && poetry run uvicorn src.main:app --reload --port=8080 --host=0.0.0.0"
     env_file:
       - .env
     networks:

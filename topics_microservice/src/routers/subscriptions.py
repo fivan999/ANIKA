@@ -8,7 +8,8 @@ from src.database import get_db
 from src.depends import get_current_partner_id
 
 subscription_router = APIRouter(
-    prefix='/subscriptions', tags=['Subscriptions'],
+    prefix='/subscriptions',
+    tags=['Subscriptions'],
 )
 
 
@@ -40,8 +41,8 @@ async def create_subscription(
         db=db,
         current_partner_id=current_partner_id,
     )
-    
-    
+
+
 @subscription_router.get('/my')
 async def get_my_subscriptions(
     topic_id: int = None,
