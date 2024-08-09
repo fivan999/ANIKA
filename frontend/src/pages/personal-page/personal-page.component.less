@@ -1,0 +1,244 @@
+.topic-full-view-container{
+    width: 100%;
+    height: 100vh;
+    display: block;
+    background-color: var(--muted-color-3);
+}
+
+header{
+    border-bottom: 1px solid  var(--muted-color-2);
+    padding: 0 20px;
+    height: 54px;
+    background-color: var(--primary-color);
+
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+}
+.user-info-header{
+    border-bottom: 1px solid  var(--muted-color-2);
+    padding: 0 20px;
+    height: 54px;
+    background-color: var(--primary-color);
+
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+
+}
+a{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.info-container{
+    padding: 20px 120px;
+    padding-bottom: 0;
+
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+
+    background-color: var(--primary-color);
+}
+.main-button{
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+    
+    width: auto;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary-text);
+    background-color: var(--contrast-color);
+    cursor: pointer;
+}
+.delete-button{
+    border: none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.45);
+    background: transparent;
+    border-radius: 4px;
+    height: 30px;
+
+    width: auto;
+    font-family: var(--font-family);
+    color: #e92020;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: transparent;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.ghost-button{
+    border: none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.45);
+    background: transparent;
+    border-radius: 4px;
+    height: 30px;
+
+    width: auto;
+    font-family: var(--font-family);
+    color: var(--contrast-color);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: transparent;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.buttons{
+    margin: 20px 0;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+.main-container{
+    padding: 20px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+
+    overflow:scroll;
+
+
+}
+.block{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+}
+.topic-block{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 300px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--muted-color-4);
+    
+}
+
+.icon-click{
+    padding: 5px;
+    cursor: pointer;
+    &:hover{
+
+        border-radius: 100px;
+        background-color: var(--muted-color-2);
+        
+    }
+}
+.model-create-topics-back{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.model-create-topics-back-click{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #01010151;
+}
+.model-create-topics{
+    z-index: 1000;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.45);
+
+    animation: slideInUp 250ms;
+}
+textarea{
+    border-radius: 12px;
+    min-width: 500px;
+    min-height: 300px;
+    padding: 10px;
+}
+
+
+.slideInUp {
+    -webkit-animation-name: slideInUp;
+    animation-name: slideInUp;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    }
+    @-webkit-keyframes slideInUp {
+    0% {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    visibility: visible;
+    }
+    100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    }
+    }
+    @keyframes slideInUp {
+    0% {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    visibility: visible;
+    }
+    100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    }
+    } 
+  
+    .delete-all-button{
+        border: none;
+        border-radius: 4px;
+        height: 30px;
+        
+        font-family: var(--font-family);
+        font-weight: 500;
+        font-size: 12px;
+        text-transform: uppercase;
+        text-align: center;
+        color: var(--secondary-text);
+        background-color: #ec2828;
+        cursor: pointer;
+    }

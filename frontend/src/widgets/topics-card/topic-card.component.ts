@@ -1,13 +1,12 @@
-import { Component, Input, input } from '@angular/core';
-import { CardInterface } from './problem-card.interface';
+import { Component, Input } from '@angular/core';
 
 
 @Component({
   selector: 'app-topic-card',
   standalone: true,
   imports: [],
-  templateUrl: './problem-card.component.html',
-  styleUrl: './problem-card.component.less'
+  templateUrl: './topic-card.component.html',
+  styleUrl: './topic-card.component.less'
 })
 export class TopicCardComponent {
   @Input() title: string = "Спонсор"

@@ -1,0 +1,63 @@
+<div class="topic-full-view-container">
+    <header>
+        <a routerLink="/topics" (click)="changeTopicVisible()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 12H5" stroke="#3C72FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 19L5 12L12 5" stroke="#3C72FF" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            <p>Детали топика</p>
+        </a>
+    </header>
+
+
+    <div class="info-container">
+        <h2>{{topic.partner.name}}</h2>
+        <h3>{{topic.name}}</h3>
+        <div class="buttons">
+            <button class="main-button">Подписаться</button>
+            <button class="ghost-button">Изменить</button>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="block">
+            <h3>
+                Описание
+            </h3>
+            <p>
+                {{topic.description}}
+            </p>
+        </div>
+        <div class="block">
+            <h3>
+                URLs
+            </h3>
+            @for(item of URLsSubscriptions; track item){
+            <div class="buttons-input">
+                <input class="input-mini" value="{{item.url}}" style="min-width: 400px;" placeholder="Путь/до/Публичного/API" /> <button
+                    class="delete-button" (click)="unSubscription(item.id)">Отписаться</button>
+            </div>
+        }
+        <div class="buttons">
+            <input class="input-mini" [formControl] = "addInput" style="min-width: 400px;" placeholder="Путь/до/Публичного/API"/> <button
+                class="main-button" (click)="CreateUrls()" >Подписаться</button>
+        </div>
+        </div>
+        <div class="block">
+            <h3>
+                История
+            </h3>
+            @for(item of this.topicMessenges.messages; track item){
+                <div class = "messenge-block">
+                    1
+                    {{item.payload.username}}
+
+                    {{item.payload.text}}
+
+                    {{item.payload.created_date}}
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
