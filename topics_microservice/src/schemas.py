@@ -1,11 +1,9 @@
-from typing import Any
-
-from pydantic import BaseModel, HttpUrl, Json
+from pydantic import BaseModel
 
 
 class SubscriptionBase(BaseModel):
     topic_id: int
-    url: HttpUrl
+    url: str
 
 
 class SubscriptionCreate(SubscriptionBase):
@@ -41,7 +39,7 @@ class Permission(PermissionBase):
 class TopicBase(BaseModel):
     name: str
     description: str | None = None
-    json_template: Json[Any]
+    json_template: str
 
 
 class TopicCreate(TopicBase):

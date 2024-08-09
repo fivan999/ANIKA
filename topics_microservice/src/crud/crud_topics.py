@@ -91,7 +91,6 @@ async def create_topic(
     db: sqlalchemy.ext.asyncio.AsyncSession,
     current_partner_id: int,
 ):
-    topic.json_template = str(topic.json_template)
     db_topic = src.models.Topic(
         **topic.model_dump(), partner_id=current_partner_id,
     )
@@ -136,7 +135,6 @@ async def edit_topic(
     db: sqlalchemy.ext.asyncio.AsyncSession,
     current_partner_id: int,
 ):
-    new_topic.json_template = str(new_topic.json_template)
     db_topic = await get_topic_by_id(topic_id, db, current_partner_id)
     if db_topic.partner_id != current_partner_id:
         logger.error(
