@@ -92,6 +92,23 @@ async def create_permission(
     db: sqlalchemy.ext.asyncio.AsyncSession,
     current_partner_id: int,
 ) -> src.models.Permission:
+    result = await db.execute(
+        sqlalchemy.future.select(src.models.Permission).filter(
+            src.models.Permission.topic_id == permission.topic_id,
+            src.models.Permission.partner_id == current_partner_id,
+        ),
+    )
+    permission_ = result.scalars().first()
+    if permission_:
+        logger.error(
+            'Permission for topic %s and partner %s already exists',
+            permission.topic_id,
+            current_partner_id,
+        )
+        raise fastapi.HTTPException(
+            status_code=400,
+            detail='Permission already exists',
+        )
     await src.crud.crud_partners.check_partner_is_exists(
         permission.partner_id, db,
     )
