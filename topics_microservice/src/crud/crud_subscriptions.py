@@ -65,6 +65,22 @@ async def create_subscription(
     return db_subscription
 
 
+async def get_my_subscriptions(
+    topic_id: int,
+    db: sqlalchemy.ext.asyncio.AsyncSession,
+    current_partner_id: int,
+) -> list[src.models.Subscription]:
+    stmt = sqlalchemy.future.select(src.models.Subscription).filter(
+        src.models.Subscription.partner_id == current_partner_id,
+    )
+
+    if topic_id is not None:
+        stmt = stmt.filter(src.models.Subscription.topic_id == topic_id)
+
+    result = await db.execute(stmt)
+    return result.scalars().all()
+
+
 async def delete_subscription_by_id(
     subscription_id: int,
     db: sqlalchemy.ext.asyncio.AsyncSession,

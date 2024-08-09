@@ -40,6 +40,32 @@ async def create_subscription(
         db=db,
         current_partner_id=current_partner_id,
     )
+    
+    
+@subscription_router.get('/my')
+async def get_my_subscriptions(
+    topic_id: int = None,
+    db: AsyncSession = Depends(get_db),
+    current_partner_id: int = Depends(get_current_partner_id),
+) -> list[schemas.Subscription]:
+    """
+    Получить список подписок на указанную тему для текущего пользователя.
+
+    Параметры:
+    - **topic_id**: Идентификатор темы, на которую оформлены подписки. Если не указан, возвращаются все подписки.
+
+    Возвращает:
+    - Список объектов подписок.
+
+    Пример использования:
+    - GET `/subscriptions/my` — получить все подписки на текущего пользователя.
+    - GET `/subscriptions/my?topic_id=123` — получить все подписки на тему с идентификатором 123.
+    """
+    return await crud_subscriptions.get_my_subscriptions(
+        topic_id=topic_id,
+        db=db,
+        current_partner_id=current_partner_id,
+    )
 
 
 @subscription_router.get('/{subscription_id}')
