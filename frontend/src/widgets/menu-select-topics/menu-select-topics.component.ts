@@ -12,7 +12,7 @@ import { ButtonMenuComponent } from '../../shared/ui/button-menu/button.componen
 export class MenuSelectTopicsComponent {
 
   async giveAllTopics(){
-    const AllTopics = await fetch("http://147.45.185.102:8000/topics",{
+    const AllTopics = await fetch("http://127.0.0.1:8000/topics",{
       method: "GET",
       headers: {"accept": "application/json",
                 "'partner-id": "1",

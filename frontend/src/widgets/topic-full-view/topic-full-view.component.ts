@@ -96,7 +96,7 @@ export class TopicFullViewComponent {
   }
   async messagesSearch(){
     try{
-    const response = await fetch(`http://147.45.185.102:8000/messages/search`, {
+    const response = await fetch(`http://127.0.0.1:8000/messages/search`, {
       method: "POST",
       headers: {
         "accept": "application/json",
@@ -123,7 +123,7 @@ export class TopicFullViewComponent {
 
     try{
     const response = await fetch(
-      `http://147.45.185.102:8000/subscriptions/delete/${id}`, {
+      `http://127.0.0.1:8000/subscriptions/delete/${id}`, {
       method: "DELETE",
       headers: {"accept": "application/json",
                 "Authorization": `Bearer ${this.authService.getToken()}`,

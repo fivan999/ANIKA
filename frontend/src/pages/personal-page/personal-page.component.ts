@@ -32,6 +32,7 @@ export class PersonalPageComponent {
   allURLsSubscriptions : any = {};
   openCreateTopic : boolean = false;
   openAddPermission : boolean = false;
+  openPermisionEditor : boolean = false;
   
   topicName = new FormControl("");
   topicDescription = new FormControl("");
@@ -44,10 +45,13 @@ export class PersonalPageComponent {
   changeCreateTopic(){
     this.openCreateTopic = !this.openCreateTopic;
   }
+  changeOpenPermisionEditor(){
+    this.openPermisionEditor = !this.openPermisionEditor;
+  }
 
   async getUser() {
     try {
-      const response = await fetch("http://147.45.185.102:8000/auth/me", {
+      const response = await fetch("http://127.0.0.1:8000/auth/me", {
         method: "GET",
         headers: {
           "accept": "application/json",
@@ -60,7 +64,7 @@ export class PersonalPageComponent {
 
 
       try {
-        const response = await fetch(`http://147.45.185.102:8000/partners/${this.user.partner_id}`, {
+        const response = await fetch(`http://127.0.0.1:8000/partners/${this.user.partner_id}`, {
           method: "GET",
           headers: {
             "accept": "application/json",
@@ -80,7 +84,7 @@ export class PersonalPageComponent {
   }
   async getMyTopics() {
     try {
-      const response = await fetch(`http://147.45.185.102:8000/topics/my`, {
+      const response = await fetch(`http://127.0.0.1:8000/topics/my`, {
         method: "GET",
         headers: {
           "accept": "application/json",
@@ -95,7 +99,7 @@ export class PersonalPageComponent {
   }
   async removeTopic(id : number) {
     try {
-      const response = await fetch(`http://147.45.185.102:8000/topics/${id}`, {
+      const response = await fetch(`http://127.0.0.1:8000/topics/${id}`, {
         method: "DELETE",
         headers: {
           "accept": "application/json",
@@ -111,7 +115,7 @@ export class PersonalPageComponent {
   }
   async createTopic() {
     try {
-      const response = await fetch(`http://147.45.185.102:8000/topics/create`, {
+      const response = await fetch(`http://127.0.0.1:8000/topics/create`, {
         method: "POST",
         headers: {
           "accept": "application/json",
@@ -153,7 +157,7 @@ export class PersonalPageComponent {
   }
   async getMySubscriptions() {
     try {
-      const response = await fetch(`http://147.45.185.102:8000/subscriptions/my`, {
+      const response = await fetch(`http://127.0.0.1:8000/subscriptions/my`, {
         method: "GET",
         headers: {
           "accept": "application/json",
@@ -170,7 +174,7 @@ export class PersonalPageComponent {
 
     try{
     const response = await fetch(
-      `http://147.45.185.102:8000/subscriptions/delete/${id}`, {
+      `http://127.0.0.1:8000/subscriptions/delete/${id}`, {
       method: "DELETE",
       headers: {"accept": "application/json",
                 "Authorization": `Bearer ${this.authService.getToken()}`,

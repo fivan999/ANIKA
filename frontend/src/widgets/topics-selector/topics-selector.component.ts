@@ -23,7 +23,7 @@ export class TopicsSelectorComponent {
   topics: any[] = [];
 
   async loadTopics() {
-      const response = await fetch("http://147.45.185.102:8000/topics", {
+      const response = await fetch("http://127.0.0.1:8000/topics", {
         method: "GET",
         headers: {
           "accept": "application/json",

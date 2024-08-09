@@ -34,7 +34,7 @@
             </h3>
             @for(item of URLsSubscriptions; track item){
             <div class="buttons-input">
-                <input class="input-mini" value="{{item.url}}" style="min-width: 400px;" placeholder="Путь/до/Публичного/API" /> <button
+                <input class="input-mini" disabled value="{{item.url}}" style="min-width: 400px;" placeholder="Путь/до/Публичного/API" /> <button
                     class="delete-button" (click)="unSubscription(item.id)">Отписаться</button>
             </div>
         }

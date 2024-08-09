@@ -27,7 +27,7 @@ export class LoginPageComponent {
   password = new FormControl('');
 
   async getAuthToken() : Promise<void>{
-    const authTocken = await fetch("http://147.45.185.102:8000/auth/token", {
+    const authTocken = await fetch("http://127.0.0.1:8000/auth/token", {
       method: 'POST',  
       headers: {
         'Content-Type': 'application/json'
