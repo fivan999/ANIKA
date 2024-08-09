@@ -95,7 +95,7 @@ async def create_permission(
     result = await db.execute(
         sqlalchemy.future.select(src.models.Permission).filter(
             src.models.Permission.topic_id == permission.topic_id,
-            src.models.Permission.partner_id == current_partner_id,
+            src.models.Permission.partner_id == permission.partner_id,
         ),
     )
     permission_ = result.scalars().first()
