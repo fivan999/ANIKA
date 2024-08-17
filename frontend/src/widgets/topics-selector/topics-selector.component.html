@@ -1,0 +1,16 @@
+<article>
+    <h2>Топики</h2>
+
+    <div class="card-container">
+    @for(item of topics; track item){
+        <a routerLink = "details"><app-topic-card  (click) = "changeShowDetails(item)"  topic="{{item.name}}" description="{{item.description}}" title="{{item.partner.name}}"/></a>
+    }
+    </div>
+
+    @if(getShowDetails() && getUrl() == "/topics/details"){
+        <div class="details-container">
+        <router-outlet></router-outlet>
+        </div>
+        }
+</article>
+

@@ -1,0 +1,130 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+    --primary-color: white;
+    --muted-color: #545454;
+    --muted-color-2: #9e9e9e;
+    --muted-color-3: #f4f4f4;
+    --muted-color-4: #eeebf6;
+    --secondary-color: black;
+    --contrast-color: #3c72ff;
+
+    --primary-text: black;
+    --muted-text: #545454;
+    --secondary-text: white;
+
+}
+:root {
+    --font-family: "Inter", sans-serif;
+    --second-family: "IBM Plex Sans", sans-serif;
+}
+// <uniquifier>: Use a unique and descriptive class name
+*{
+    margin: 0;
+    font-family: var(--font-family);
+}
+body{
+  background-color: var(--primary-color);
+
+}
+  
+  h4{
+    font-size: 14px;
+    font-weight: 400;
+
+}
+h3{
+  font-family: var(--second-family);
+  font-size: 15px;
+  font-weight: 500;
+
+}
+h2{
+  font-family: var(--second-family);
+  font-size: 20px;
+  font-weight: 600;
+
+}
+h1{
+  font-family: var(--second-family);
+  font-size: 28px;
+  font-weight: 700;
+
+}
+p{
+    font-size: 14px;
+    font-weight: 400;
+
+}
+a{
+  text-decoration: none;
+  color:currentColor;
+}
+
+
+// Buttons
+
+button{
+  border-radius: 12px;
+  height: 40px; 
+  width: 100%;
+  background-color: var(--secondary-color);
+  color: var(--secondary-text); 
+  border: none; 
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 15px;
+
+  box-sizing: border-box;
+
+  &:hover{
+      cursor: pointer;
+      transition: 200ms;
+      scale: 101%;
+      opacity: 0.9;
+  }
+}
+
+
+//inputs
+
+input{
+  border: 1px solid var(--muted-color);
+  border-radius: 12px;
+  padding: 0px 20px;
+  width: 100%;
+  height: 40px;
+
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--muted-color);
+
+  box-sizing: border-box;
+
+
+  &:focus{
+      transition: 200ms;
+      scale: 101%;
+  }
+}
+.input-mini{
+  border: none;
+
+  border: 1px solid var(--muted-color);
+  border-radius: 4px;
+  padding: 0px 20px;
+  width: 100%;
+  min-width: 300px;
+  height: 30px;
+  background: var(--primary-color);
+
+  font-family: var(--font-family);
+
+  font-size: 12px;
+  color: var(--muted-color);
+  font-weight: 600;
+
+
+  box-sizing: border-box;
+
+}

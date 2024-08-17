@@ -1,0 +1,11 @@
+<main>
+    <img src="icon.svg" />
+    <div class="container">
+    <input placeholder="Логин" [formControl] = "username"/>
+    <input placeholder="Пароль" [formControl] = "password"/>
+    {{username.value}}
+    <app-button title="Войти в систему" (click) = "getAuthToken()"/>
+</div>
+</main>
+
+
