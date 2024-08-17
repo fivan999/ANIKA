@@ -154,6 +154,11 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# messages microservice
+messages_microservice/settings.toml
+messages_microservice/.idea
+messages_microservice/files
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
