@@ -4,7 +4,6 @@ from typing import Any, Dict
 from fastapi import FastAPI, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
@@ -66,13 +65,6 @@ def create_app() -> FastAPI:
         FastAPI: Fastapi application
     """
     app = FastAPI(lifespan=lifespan_events)
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=['*'],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
     app.include_router(auth_router)
     app.openapi_schema = get_openapi_schema(app)
     return app
